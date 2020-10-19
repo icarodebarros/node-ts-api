@@ -1,6 +1,6 @@
 import { StormGlass, ForecastPoint } from '@src/clients/stormGlass';
 import logger from '@src/logger';
-import { Beach } from '@src/models/beaches';
+import { Beach } from '@src/models/beach';
 import { InternalError } from '@src/util/errors/internal-error';
 
 export interface TimeForecast {
