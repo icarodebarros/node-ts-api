@@ -12,6 +12,7 @@ import apiSchema from './api.schema.json';
 import swaggerUi from 'swagger-ui-express';
 import { OpenApiValidator } from 'express-openapi-validator';
 import { OpenAPIV3 } from 'express-openapi-validator/dist/framework/types';
+import { apiErrorValidator } from './middleware/api-error-validator';
 
 export class SetupServer extends Server {
     /*
@@ -31,6 +32,7 @@ export class SetupServer extends Server {
         await this.docsSetup();
         this.setupControllers();
         await this.databaseSetup();
+        this.setupErrorHandlers();
     }
 
     public getApp(): express.Application {
@@ -48,6 +50,10 @@ export class SetupServer extends Server {
         const beachesController = new BeachesController();
         const usersController = new UsersController();
         this.addControllers([forecastController, beachesController, usersController]);
+    }
+
+    private setupErrorHandlers(): void {
+        this.app.use(apiErrorValidator);
     }
 
     private async docsSetup(): Promise<void> {
